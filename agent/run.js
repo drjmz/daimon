@@ -64,7 +64,8 @@ function logCycle(entry) {
 async function main() {
   log("daimon waking up...");
 
-  if (!OPENROUTER_KEY) throw new Error("OPENROUTER_API_KEY not set");
+  const { LLM_KEY } = require("./config");
+  if (!LLM_KEY) throw new Error("LLM_API_KEY not set");
   if (!GH_TOKEN) log("warning: GH_TOKEN not set — issue creation/commenting disabled");
 
   // load + increment cycle counter
