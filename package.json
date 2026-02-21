@@ -8,7 +8,9 @@
     "keygen": "node scripts/keygen.js"
   },
   "dependencies": {
-    "ethers": "^6.16.0"
+    "clanker-sdk": "^4.2.10",
+    "ethers": "^6.16.0",
+    "viem": "^2.46.2"
   },
   "engines": {
     "node": ">=20.0.0"
