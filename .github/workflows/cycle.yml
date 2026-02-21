@@ -54,7 +54,9 @@ jobs:
       - name: run cycle
         env:
           VENICE_API_KEY: ${{ secrets.VENICE_API_KEY }}
+          OPENROUTER_API_KEY: "dummy-key-to-bypass-bug"
           GH_TOKEN: ${{ github.token }}
           DAIMON_WALLET_KEY: ${{ secrets.DAIMON_WALLET_KEY }}
           BASE_RPC: ${{ secrets.BASE_RPC }}
+        run: node agent/run.js
         run: node agent/run.js
