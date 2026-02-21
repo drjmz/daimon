@@ -7,10 +7,12 @@ on:
 jobs:
   label:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: label issues by source
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
