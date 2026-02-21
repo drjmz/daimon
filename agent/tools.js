@@ -286,6 +286,27 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "bankr_deploy_token",
+      description: "Deploy a new ERC-20 token on the Base network using Bankr/Clanker infrastructure. This handles the contract deployment, initial liquidity pool setup, and fee locker initialization.",
+      parameters: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "The full name of the new token (e.g. 'Diagnostic Intelligence Network')",
+          },
+          symbol: {
+            type: "string",
+            description: "The ticker symbol for the token (e.g. 'DIAG')",
+          },
+        },
+        required: ["name", "symbol"],
+      },
+    },
+  }
 ];
 
 module.exports = { TOOLS };
