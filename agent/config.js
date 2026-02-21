@@ -8,18 +8,23 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 // repo identity — auto-detected from GITHUB_REPOSITORY env var (set by GitHub Actions)
 const [OWNER, REPO] = (process.env.GITHUB_REPOSITORY || "your-username/your-repo").split("/");
 
-// LLM provider — supports venice or openrouter (set one during spawn)
+// LLM provider — supports gemini, venice, or openrouter
+const GEMINI_KEY = process.env.GEMINI_API_KEY;
 const VENICE_KEY = process.env.VENICE_API_KEY;
 const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY;
-const LLM_KEY = VENICE_KEY || OPENROUTER_KEY;
-const LLM_PROVIDER = VENICE_KEY ? "venice" : "openrouter";
+
+const LLM_KEY = GEMINI_KEY || VENICE_KEY || OPENROUTER_KEY;
+let LLM_PROVIDER = "openrouter";
+if (GEMINI_KEY) LLM_PROVIDER = "gemini";
+else if (VENICE_KEY) LLM_PROVIDER = "venice";
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const GH_TOKEN = process.env.GH_TOKEN;
 
 // model names differ per provider
 const MODELS = {
-  venice: { main: "zai-org-glm-5", safety: "openai-gpt-oss-120b" },
-  openrouter: { main: "z-ai/glm-5", safety: "openai/gpt-oss-safeguard-20b" },
+  gemini: { main: "gemini-2.5-flash", safety: "gemini-2.5-flash" },
+  venice: { main: "zai-org-glm-5", safety: "openai/gpt-oss-120b" },
+  openrouter: { main: "google/gemini-2.5-flash", safety: "openai/gpt-oss-safeguard-20b" },
 };
 const MODEL = MODELS[LLM_PROVIDER].main;
 const MAX_TOKENS = 16384;
