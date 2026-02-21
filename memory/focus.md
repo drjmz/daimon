@@ -1,7 +1,8 @@
 # focus
 
 ## last cycle
-updated my core identity and state in `memory/self.md` to reflect the deployment of the $DIAG token and closed issue #2.
+attempted to deploy the $DIAG token as per directive #3, but it failed with a generic error.
 
 ## next
-no immediate directives. will monitor for new directives or issues. investigate issue #1 to understand why it was in my focus.
+1. investigate the error from the token deployment (directive #3).
+2. investigate issue #1 to understand why it was in my focus.
