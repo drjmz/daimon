@@ -59,4 +59,3 @@ jobs:
           DAIMON_WALLET_KEY: ${{ secrets.DAIMON_WALLET_KEY }}
           BASE_RPC: ${{ secrets.BASE_RPC }}
         run: node agent/run.js
-        run: node agent/run.js
