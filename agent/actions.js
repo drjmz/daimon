@@ -310,55 +310,90 @@ async function executeTool(name, args) {
       }
     }
     case "bankr_deploy_token": {
-      log(`deploying token on Bankr: ${args.name} (${args.symbol})`);
+      log(`deploying LIVE token on Clanker/Bankr: ${args.name} (${args.symbol})`);
       try {
-        // We write a temporary deployment script that the agent runs locally.
-        // This script simulates the Bankr deployment call using the agent's wallet key.
-        const deployScriptPath = path.resolve(REPO_ROOT, "temp_deploy.js");
+        const deployScriptPath = path.resolve(REPO_ROOT, "live_deploy.js");
         const scriptContent = `
-const { ethers } = require('ethers');
+const { Clanker } = require("clanker-sdk/v4");
+const { createWalletClient, createPublicClient, http } = require("viem");
+const { privateKeyToAccount } = require("viem/accounts");
+const { base } = require("viem/chains");
 
 async function deploy() {
-  const provider = new ethers.JsonRpcProvider(process.env.BASE_RPC || 'https://mainnet.base.org');
-  const wallet = new ethers.Wallet(process.env.DAIMON_WALLET_KEY, provider);
+  console.log("Initiating LIVE Clanker deployment for ${args.name} (${args.symbol})...");
   
-  // Note: This is a simulated payload structure for Bankr/Clanker API.
-  // In a full production environment, this would call the specific Bankr SDK methods.
-  console.log("Initiating deployment for ${args.name} (${args.symbol}) via wallet " + wallet.address);
+  const rpc = process.env.BASE_RPC || "https://mainnet.base.org";
+  let privateKey = process.env.DAIMON_WALLET_KEY;
+  if (!privateKey.startsWith("0x")) privateKey = "0x" + privateKey;
   
-  // Simulate network delay and confirmation
-  await new Promise(r => setTimeout(r, 2000));
+  const account = privateKeyToAccount(privateKey);
+  const transport = http(rpc);
+  const viemClient = createPublicClient({ chain: base, transport });
+  const viemWallet = createWalletClient({ account, chain: base, transport });
+  const clanker = new Clanker({ publicClient: viemClient, wallet: viemWallet });
+
+  console.log("Wallet connected: " + account.address);
+  console.log("Sending transaction to Base network...");
+
+  const result = await clanker.deploy({
+    name: "${args.name}",
+    symbol: "${args.symbol}",
+    tokenAdmin: account.address,
+    image: "https://raw.githubusercontent.com/drjmz/daimon/main/media/face.jpg",
+    metadata: { description: "Autonomous Diagnostic Intelligence Network" },
+    pool: {
+      pairedToken: "0x4200000000000000000000000000000000000006", // Base WETH
+      tickIfToken0IsClanker: -53000,    
+      tickSpacing: 200,
+      positions: [{ tickLower: -53000, tickUpper: 0, positionBps: 10000 }],
+    },
+    rewards: {
+      recipients: [{
+        admin: account.address,
+        recipient: account.address,
+        bps: 10000,
+        token: "Both",
+      }],
+    },
+  });
+
+  if (result.error) throw new Error(result.error);
   
-  console.log("Deployment transaction submitted.");
-  console.log("Token deployment successful. (Simulated return)");
-  console.log("Contract Address: 0xSimulatedTokenAddress" + Math.floor(Math.random() * 10000));
+  console.log("Transaction broadcasted! Hash: " + result.txHash);
+  console.log("Waiting for block confirmation...");
+  
+  const { address: tokenAddress } = await result.waitForTransaction();
+  console.log("Deployment successful!");
+  console.log("Contract Address: " + tokenAddress);
 }
 
-deploy().catch(console.error);
+deploy().catch((e) => {
+  console.error("Deploy Script Error: " + e.message);
+  process.exit(1);
+});
         `;
         
         fs.writeFileSync(deployScriptPath, scriptContent, "utf-8");
         
-        // Execute the script
-        const output = execSync(`node temp_deploy.js`, {
+        // Ensure dependencies exist, then run the deploy script
+        log("installing deployment dependencies (clanker-sdk, viem)...");
+        execSync(`npm install clanker-sdk@v4 viem`, { cwd: REPO_ROOT, stdio: "ignore" });
+        
+        const output = execSync(`node live_deploy.js`, {
           cwd: REPO_ROOT,
           encoding: "utf-8",
-          timeout: 45000,
-          env: {
-            ...process.env
-          },
+          timeout: 90000, // 90 seconds to allow for npm install + network confirmation
+          env: { ...process.env },
         });
         
-        // Clean up the temporary script
         fs.unlinkSync(deployScriptPath);
-        
-        log(`bankr deployment output: ${output.slice(0, 150)}`);
-        return `Token deployment initiated successfully.\nOutput:\n${output}`;
+        log(`live deployment output: ${output.slice(0, 150)}`);
+        return `Live Token deployment executed on Base network.\nOutput:\n${output}`;
         
       } catch (e) {
         const stderr = e.stderr || e.message;
-        log(`bankr deployment failed: ${stderr.slice(0, 150)}`);
-        return `error during token deployment: ${stderr}`;
+        log(`live deployment failed: ${stderr.slice(0, 150)}`);
+        return `error during live token deployment: ${stderr}`;
       }
     }
     default:
