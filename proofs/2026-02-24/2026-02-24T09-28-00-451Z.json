@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-02-24T09:28:00.451Z",
+  "model": "gemini-2.5-flash",
+  "steps": [
+    {
+      "step": 1,
+      "timestamp": "2026-02-24T09:27:54.386Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"query\":\"token deployment directive #3\"}",
+            "name": "search_memory"
+          },
+          "id": "function-call-5710375643001078848",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "timestamp": "2026-02-24T09:27:56.407Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"query\":\"DIAG token\",\"glob\":\"memory/cycles/*.md\"}",
+            "name": "search_memory"
+          },
+          "id": "function-call-4624696005648698846",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "timestamp": "2026-02-24T09:28:00.451Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "function_call_filter: MALFORMED_FUNCTION_CALL",
+      "toolCalls": null
+    }
+  ],
+  "total_steps": 3,
+  "meta": {
+    "issues_open": 1,
+    "files_in_repo": 11
+  }
+}
