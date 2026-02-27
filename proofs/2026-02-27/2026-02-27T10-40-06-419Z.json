@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-02-27T10:40:06.420Z",
+  "model": "gemini-2.5-flash",
+  "steps": [
+    {
+      "step": 1,
+      "timestamp": "2026-02-27T10:39:41.731Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"query\":\"directive #3\"}",
+            "name": "search_memory"
+          },
+          "id": "function-call-7067397818514617350",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "timestamp": "2026-02-27T10:39:42.704Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"path\":\"memory/focus.md\"}",
+            "name": "read_file"
+          },
+          "id": "function-call-252531307602869971",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "timestamp": "2026-02-27T10:39:43.686Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"path\":\"memory/self.md\"}",
+            "name": "read_file"
+          },
+          "id": "function-call-567048721589232568",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "timestamp": "2026-02-27T10:39:44.775Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"pattern\":\"directive #3\",\"glob\":\"*.md\"}",
+            "name": "search_files"
+          },
+          "id": "function-call-13552462987131316855",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "timestamp": "2026-02-27T10:39:44.910Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\ngemini: gemini 429: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 15.13797286s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"model\": \"gemini-2.5-flash\",\n              \"location\": \"global\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"15s\"\n      }\n    ]\n  }\n}\n]",
+      "toolCalls": null
+    },
+    {
+      "step": 5,
+      "timestamp": "2026-02-27T10:39:51.005Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "tool_calls",
+      "toolCalls": [
+        {
+          "function": {
+            "arguments": "{\"glob\":\"*.md\",\"path\":\".\",\"pattern\":\"directive #3\"}",
+            "name": "search_files"
+          },
+          "id": "function-call-14091911721012975049",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "timestamp": "2026-02-27T10:39:51.145Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\ngemini: gemini 429: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 8.903387083s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.5-flash\"\n            },\n            \"quotaValue\": \"5\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"8s\"\n      }\n    ]\n  }\n}\n]",
+      "toolCalls": null
+    },
+    {
+      "step": 6,
+      "timestamp": "2026-02-27T10:39:56.284Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\ngemini: gemini 429: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 3.764590422s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.5-flash\"\n            },\n            \"quotaValue\": \"5\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"3s\"\n      }\n    ]\n  }\n}\n]",
+      "toolCalls": null
+    },
+    {
+      "step": 6,
+      "timestamp": "2026-02-27T10:40:06.419Z",
+      "model": "gemini-2.5-flash",
+      "finishReason": "error",
+      "content": "inference failed: All inference providers failed:\ngemini: gemini 429: [{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 53.630095045s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.5-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"53s\"\n      }\n    ]\n  }\n}\n]",
+      "toolCalls": null
+    }
+  ],
+  "total_steps": 9,
+  "meta": {
+    "issues_open": 4,
+    "files_in_repo": 11
+  }
+}
